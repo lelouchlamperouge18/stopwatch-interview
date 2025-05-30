@@ -28,6 +28,7 @@ Instead of `setInterval`, we use `requestAnimationFrame`, which:
 - Syncs with the browser’s refresh rate
 - Delivers more accurate and consistent timing
 - Is paused automatically when the page is inactive (saving CPU)
+
 To ensure consistent time tracking:
 - We use `requestAnimationFrame` for ticking
 - We store the accurate elapsed time in a `ref` (`secondsRef`)
