@@ -21,6 +21,7 @@ bun dev
 - Event Loop Delay: JavaScript is single-threaded. When busy, setInterval execution is delayed.
 - Browser Throttling: Inactive tabs or background apps may pause or slow timers.
 - Time Drift: Small inaccuracies accumulate over time, making the stopwatch increasingly inaccurate.
+- setInterval continues to run when switching tabs, but it doesn't always execute as consistently as it does when the tab is active.
 
 ## Our Solution: using `requestAnimationFrame`
 
