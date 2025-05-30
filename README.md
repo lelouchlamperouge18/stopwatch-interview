@@ -14,23 +14,21 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Why setInterval is not good for implementing a time related function like stopwatch?
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`setInterval` is not reliable for implementing precise time-based features due to:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Event Loop Delay: JavaScript is single-threaded. When busy, setInterval execution is delayed.
+- Browser Throttling: Inactive tabs or background apps may pause or slow timers.
+- Time Drift: Small inaccuracies accumulate over time, making the stopwatch increasingly inaccurate.
 
-## Learn More
+## Our Solution: using `requestAnimationFrame`
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Instead of `setInterval`, we use `requestAnimationFrame`, which:
+- Syncs with the browser’s refresh rate
+- Delivers more accurate and consistent timing
+- Is paused automatically when the page is inactive (saving CPU)
+To ensure consistent time tracking:
+- We use `requestAnimationFrame` for ticking
+- We store the accurate elapsed time in a `ref` (`secondsRef`)
+- We use `useState` only to trigger UI re-rendering
